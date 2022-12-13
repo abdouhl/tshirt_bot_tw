@@ -35,6 +35,9 @@ for status in statuses:
     p = done_comments.fetch({"value": status.id_str})
     if p.count != 0:
         continue
+    if status.in_reply_to_screen_name =="MakeItTshirt" or status.in_reply_to_screen_name == "abdou_hll":
+        done_comments.put(status.id_str)
+        continue
     comment_id = status.id_str
     status_id = status.in_reply_to_status_id_str
     comment_screen_name = status.author.screen_name
