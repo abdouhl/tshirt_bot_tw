@@ -38,6 +38,10 @@ for status in statuses:
     if status.in_reply_to_screen_name =="MakeItTshirt" or status.in_reply_to_screen_name == "abdou_hll":
         done_comments.put(status.id_str)
         continue
+    full_status = api.get_status(id=status.id_str, tweet_mode = "extended" )
+    if '@MakeItTshirt' not in full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]:
+        done_comments.put(status.id_str)
+        continue
     comment_id = status.id_str
     status_id = status.in_reply_to_status_id_str
     comment_screen_name = status.author.screen_name
