@@ -31,6 +31,8 @@ statuses.reverse()
 
 comment_id = ""
 status_id = ""
+comment_screen_name = ""
+tweet_it = False
 for status in statuses:
     p = done_comments.fetch({"value": status.id_str})
     if p.count != 0:
@@ -50,8 +52,40 @@ for status in statuses:
     comment_id = status.id_str
     status_id = status.in_reply_to_status_id_str
     comment_screen_name = status.author.screen_name
+    tweet_it = True
     break
 
 
-api.update_status(status=f'@{comment_screen_name}\nhttps://www.turntweetinto.com/clothes/{status_id}', in_reply_to_status_id = comment_id)
-done_comments.put(comment_id)
+if not tweet_it:
+	statuses = api.search_tweets("@MakeItAQuote",result_type = "recent",count=200)
+	statuses.reverse()
+	for status in statuses:
+		p = done_comments.fetch({"value": status.id_str})
+		if p.count != 0:
+			continue
+		if status.in_reply_to_screen_name =="MakeItTshirt" or status.in_reply_to_screen_name == "abdou_hll":
+			done_comments.put(status.id_str)
+			continue
+		try:
+			full_status = api.get_status(id=status.id_str, tweet_mode = "extended" )
+			full_in_replay_status = api.get_status(id=status.in_reply_to_status_id_str, tweet_mode = "extended" )
+		except:
+			done_comments.put(status.id_str)
+			continue
+		if '@MakeItAQuote' not in full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]:
+			done_comments.put(status.id_str)
+			continue
+		comment_id = status.id_str
+		status_id = status.in_reply_to_status_id_str
+		comment_screen_name = status.author.screen_name
+		tweet_it = True
+		break
+
+
+
+if tweet_it :
+	api.update_status(status=f'@{comment_screen_name}\nhttps://www.turntweetinto.com/clothes/{status_id}', in_reply_to_status_id = comment_id)
+	done_comments.put(comment_id)
+
+
+
