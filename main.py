@@ -72,7 +72,7 @@ if not tweet_it:
 		except:
 			done_comments.put(status.id_str)
 			continue
-		if '@TurnTweetInto' not in full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]:
+		if '@MakeItAQuote' not in full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]:
 			done_comments.put(status.id_str)
 			continue
 		comment_id = status.id_str
