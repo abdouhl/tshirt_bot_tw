@@ -35,40 +35,40 @@ comment_screen_name = ""
 product_type = "tshirt"
 tweet_it = False
 for status in statuses:
-    p = done_comments.fetch({"value": status.id_str})
-    if p.count != 0:
-        continue
-    try:
+	p = done_comments.fetch({"value": status.id_str})
+	if p.count != 0:
+		continue
+	try:
 		if status.in_reply_to_screen_name =="TurnTweetInto" or status.in_reply_to_screen_name == "abdou_hll":
-		    done_comments.put(status.id_str)
-		    continue
-        full_status = api.get_status(id=status.id_str, tweet_mode = "extended" )
-        full_in_replay_status = api.get_status(id=status.in_reply_to_status_id_str, tweet_mode = "extended" )
-    except:
-        done_comments.put(status.id_str)
-        continue
-    if '@TurnTweetInto' not in full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]:
-        done_comments.put(status.id_str)
-        continue
-    op = full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]
-    #t-shirt | mug | totebag | hoodie | sweatshirt | hat | image
-    if 'tshirt' in op or 't-shirt' in op:
-        product_type = "tshirt"
-    elif 'hoodie' in op:
-        product_type = "hoodie"
-    elif 'sweatshirt' in op:
-        product_type = "sweatshirt"
-    elif 'mug' in op:
-        product_type = "mug"
-    elif 'totebag' in op:
-        product_type = "totebag"
-    elif 'hat' in op:
-        product_type = "hat"
-    comment_id = status.id_str
-    status_id = status.in_reply_to_status_id_str
-    comment_screen_name = status.author.screen_name
-    tweet_it = True
-    break
+			done_comments.put(status.id_str)
+			continue
+		full_status = api.get_status(id=status.id_str, tweet_mode = "extended" )
+		full_in_replay_status = api.get_status(id=status.in_reply_to_status_id_str, tweet_mode = "extended" )
+	except:
+		done_comments.put(status.id_str)
+		continue
+	if '@TurnTweetInto' not in full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]:
+		done_comments.put(status.id_str)
+		continue
+	op = full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]
+	#t-shirt | mug | totebag | hoodie | sweatshirt | hat | image
+	if 'tshirt' in op or 't-shirt' in op:
+		product_type = "tshirt"
+	elif 'hoodie' in op:
+		product_type = "hoodie"
+	elif 'sweatshirt' in op:
+		product_type = "sweatshirt"
+	elif 'mug' in op:
+		product_type = "mug"
+	elif 'totebag' in op:
+		product_type = "totebag"
+	elif 'hat' in op:
+		product_type = "hat"
+	comment_id = status.id_str
+	status_id = status.in_reply_to_status_id_str
+	comment_screen_name = status.author.screen_name
+	tweet_it = True
+	break
 
 
 if not tweet_it:
@@ -97,17 +97,17 @@ if not tweet_it:
 		break
 query = ""
 if 'tshirt' == product_type:
-    urll = "https://www.turntweetinto.com/clothes/{status_id}?type=t_shirt"
+    urll = f"https://www.turntweetinto.com/clothes/{status_id}?type=t_shirt"
 elif 'hoodie' == product_type:
-    urll = "https://www.turntweetinto.com/clothes/{status_id}?type=hoodie"
+    urll = f"https://www.turntweetinto.com/clothes/{status_id}?type=hoodie"
 elif 'sweatshirt' == product_type:
-    urll = "https://www.turntweetinto.com/clothes/{status_id}?type=s_shirt"
+    urll = f"https://www.turntweetinto.com/clothes/{status_id}?type=s_shirt"
 elif 'mug' == product_type:
-    urll = "https://www.turntweetinto.com/accessories/{status_id}?type=mug"
+    urll = f"https://www.turntweetinto.com/accessories/{status_id}?type=mug"
 elif 'totebag' == product_type:
-    urll = "https://www.turntweetinto.com/accessories/{status_id}?type=totebag"
+    urll = f"https://www.turntweetinto.com/accessories/{status_id}?type=totebag"
 elif 'hat' == product_type:
-    urll = "https://www.turntweetinto.com/clothes/{status_id}?type=hat"
+    urll = f"https://www.turntweetinto.com/clothes/{status_id}?type=hat"
 
 if tweet_it :
 	api.update_status(status=f'@{comment_screen_name}\n{urll}', in_reply_to_status_id = comment_id)
