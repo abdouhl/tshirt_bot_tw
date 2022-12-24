@@ -37,7 +37,7 @@ for status in statuses:
     p = done_comments.fetch({"value": status.id_str})
     if p.count != 0:
         continue
-    if status.in_reply_to_screen_name =="MakeItTshirt" or status.in_reply_to_screen_name == "abdou_hll":
+    if status.in_reply_to_screen_name =="TurnTweetInto" or status.in_reply_to_screen_name == "abdou_hll":
         done_comments.put(status.id_str)
         continue
     try:
@@ -46,7 +46,7 @@ for status in statuses:
     except:
         done_comments.put(status.id_str)
         continue
-    if '@MakeItTshirt' not in full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]:
+    if '@TurnTweetInto' not in full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]:
         done_comments.put(status.id_str)
         continue
     comment_id = status.id_str
@@ -63,7 +63,7 @@ if not tweet_it:
 		p = done_comments.fetch({"value": status.id_str})
 		if p.count != 0:
 			continue
-		if status.in_reply_to_screen_name =="MakeItTshirt" or status.in_reply_to_screen_name == "abdou_hll":
+		if status.in_reply_to_screen_name =="TurnTweetInto" or status.in_reply_to_screen_name == "abdou_hll":
 			done_comments.put(status.id_str)
 			continue
 		try:
@@ -72,7 +72,7 @@ if not tweet_it:
 		except:
 			done_comments.put(status.id_str)
 			continue
-		if '@MakeItAQuote' not in full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]:
+		if '@TurnTweetInto' not in full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]:
 			done_comments.put(status.id_str)
 			continue
 		comment_id = status.id_str
