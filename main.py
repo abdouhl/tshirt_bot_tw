@@ -47,10 +47,10 @@ for status in statuses:
 	except:
 		done_comments.put(status.id_str)
 		continue
-	if '@TurnTweetInto' not in full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]:
+	op = full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]
+	if '@turntweetinto' not in op.lower():
 		done_comments.put(status.id_str)
 		continue
-	op = full_status.full_text[full_status.display_text_range[0]:full_status.display_text_range[1]]
 	#t-shirt | mug | totebag | hoodie | sweatshirt | hat | image
 	if 'tshirt' in op or 't-shirt' in op:
 		product_type = "tshirt"
